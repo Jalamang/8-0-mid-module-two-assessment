@@ -61,7 +61,8 @@ function checkIfAnyMovieHasRating(movies, rating = "G") {
   if(!movies.length){ throw `The movies array is empty`} 
   else {
  return movies.some((movie) => movie.rated === rating)
-}}
+}
+}
 /**
  * findById()
  * -----------------------------
@@ -80,12 +81,12 @@ function checkIfAnyMovieHasRating(movies, rating = "G") {
     };
  */
 function findById(movies, id) {
-  if(!movies.length) throw `The movies array is empty`
+  if(!movies.length)  throw `The movies array is empty`
+  return movies.find((movie) => {if(movie.imdbID === id){
+    return movie
+  }
+}) || null
 
-  return movies.find((movie) => { if(movie.imdbID === id) { return movie}
-  if(!id) { return null}
-
- })
 }
 
 /**
