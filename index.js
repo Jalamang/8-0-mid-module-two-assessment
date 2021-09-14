@@ -33,7 +33,7 @@ const exampleMovies = require("./movies");
     ];
  */
 function getAllMovieTitles(movies) {
-  if(!movies.length) throw `The movies array is empty`
+  if(!movies.length) {throw `The movies array is empty`}
  return  movies.map(movie => `${movie.title}`)
 }
 
@@ -43,7 +43,7 @@ function getAllMovieTitles(movies) {
  * Returns a boolean, representing whether or not any of the movies has been given the provided rating. 
  * If the inputted `movies` array is empty, throw an error with a message.
  * @param {Object[]} movies - An array of movies. See the `movies.js` file for an example of this array.
- * @param {string} [rating="G"] - A movie rating. Defaults to "G".
+ * @param {string} rating="G" - A movie rating. Defaults to "G".
  * @returns {boolean|Error} Returns `true` if a movie exists in the list with the given rating, 
  * otherwise returns `false`.
  *
@@ -81,7 +81,7 @@ function checkIfAnyMovieHasRating(movies, rating = "G") {
     };
  */
 function findById(movies, id) {
-  if(!movies.length)  throw `The movies array is empty`
+  if(!movies.length) { throw `The movies array is empty`}
   return movies.find((movie) => {if(movie.imdbID === id){
     return movie
   }
@@ -112,22 +112,39 @@ function findById(movies, id) {
  *  filterByGenre(movies, "Horror")
  *  //> []
  */
-function filterByGenre(movies, genre ="G") {
-  if(!movies.length) throw `The movies array is empty`
-  genre = genre.split(' ').map((word) => word.charAt(0).toUpperCase() + word.slice(1))
- return movies.filter((movie) => { 
-    movie =  movie.map((movie) => movie.charAt(0).toUpperCase() + movie.slice(1))
-  if(movie.genre === genre){
-   return true
-  }
+    // function filterByGenre(movies, genre) {
+    //   if(!movies.length) throw `The movies array is empty`
+     
+    //  return movies.filter((movie) => { 
+ 
+    //   if(movie.genre.toUpperCase().includes(genre.toUpperCase())){
+    //    return `${movie.title}`
+    //   }
+    // })}
 
-})}
+    function filterByGenre(movies, genre) {
+      if(!movies.length) {throw `The movies array is empty`}
+    
+      
+      genre = genre.charAt(0).toUpperCase() + genre.slice(1).toLowerCase()
+      //console.log(genre)
+     return movies.filter((movie) => { 
+        //movie =  movie.map((movie) => movie.charAt(0).toUpperCase() + movie.slice(1))
+      if(movie.genre.includes(genre)){
+       return `${movie.title}`
+      }
+    })}
+
+
+
+
 
 
 /**
  * getAllMoviesReleasedAtOrBeforeYear()
  * -----------------------------
- * Returns all movie objects with a `released` year equal to or less than the given year. If the movie array is empty, throw an error with a message.
+ * Returns all movie objects with a `released` year equal to or less than the given year. 
+ * If the movie array is empty, throw an error with a message.
  * @param {Object[]} movies - An array of movies. See the `movies.js` file for an example of this array.
  * @param {number} year - A year as a number. (e.g. 2000)
  * @returns {Object[]|Error} An array of movies where the `released` year is equal to or less than the inputted year.
@@ -151,17 +168,20 @@ function filterByGenre(movies, genre ="G") {
 function getAllMoviesReleasedAtOrBeforeYear(movies, year) {
   if (!movies.length){
     throw 'inputted `movies` array is empty'
-  }
+  } else {
   return movies.filter(movie => Number(movie.released.slice(-4)) <= year)
-
+  }
 }
 
 /**
  * getRottenTomatoesScoreByMovie()
  * -----------------------------
- * Transform each movie, returning an array of objects where the key is the title of the movie and the value is the score received from Rotten Tomatoes. If there are no movies, throw an error with a message.
+ * Transform each movie, returning an array of objects where the key is 
+ * the title of the movie and the value is the score received from Rotten Tomatoes. 
+ * If there are no movies, throw an error with a message.
  * @param {Object[]} movies - An array of movies. See the `movies.js` file for an example of this array.
- * @returns {Object[]|Error} An array of movie objects where the key is the movie title and the value is the score received from Rotten Tomatoes.
+ * @returns {Object[]|Error} An array of movie objects where the key is the movie title 
+ * and the value is the score received from Rotten Tomatoes.
  * 
  * NOTE: You must use both the `.map()` method and the `.find()` method.
  *
@@ -180,7 +200,38 @@ function getAllMoviesReleasedAtOrBeforeYear(movies, year) {
       { "James and the Giant Peach": "91%" },
     ];
  */
-function getRottenTomatoesScoreByMovie() {}
+function getRottenTomatoesScoreByMovie(movies) {
+  if(!movies.length) { 
+    throw `The movies array is empty`
+  } 
+
+
+ return movies.map((el) => {
+    let movieObject = {}
+    const tomato = el.ratings.find((tomato) => tomato.source === "Rotten Tomatoes")
+      movieObject[el.title] = tomato.value
+      return movieObject
+
+})
+}
+  
+  // return movies.map((el) => { 
+    
+  //   const tomato =  el.ratings.find((n) => { 
+  //      if (n.source === 'Rotten Tomatoes') {
+  //        //console.log({[el.title]: n.value });
+  //        movieObject[el.title] = n.value
+  //      return movieObject
+  //     }
+  //   })
+  // })
+  
+
+
+
+
+
+
 
 // Do not change anything below this line.
 module.exports = {
